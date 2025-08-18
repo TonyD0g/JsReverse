@@ -1,0 +1,39 @@
+POST /api/problem-detail/8/data/ HTTP/1.1
+Host: www.mashangpa.com
+Cookie: sessionid=ojj6ugazos8bzlrnuel7vxa0tbowtv32; Hm_lvt_0d2227abf9548feda3b9cb6fddee26c0=1753153764,1753170105,1753171134,1753236916; HMACCOUNT=75D220E9701682BB; Hm_lpvt_0d2227abf9548feda3b9cb6fddee26c0=1753236941; s=51b351b351b351b370b0f03010309071d030f09070
+Content-Length: 10
+Pragma: no-cache
+Cache-Control: no-cache
+Sec-Ch-Ua-Platform: "macOS"
+Sec-Ch-Ua: "Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"
+Sec-Ch-Ua-Mobile: ?0
+M: dedededededea0a6a4a2a1a2a5a8a3a2a4a5a0a0
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+Accept: */*
+T: MTc1MzIzNjk0MzU2MQ==
+Content-Type: application/json
+Origin: https://www.mashangpa.com
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://www.mashangpa.com/problem-detail/8/
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Priority: u=1, i
+Connection: keep-alive
+
+{"page":1}
+
+HTTP/1.1 200 OK
+Server: nginx
+Date: Wed, 23 Jul 2025 02:15:43 GMT
+Content-Type: application/json
+Content-Length: 534
+Connection: keep-alive
+Vary: Cookie
+X-Content-Type-Options: nosniff
+Referrer-Policy: same-origin
+Cross-Origin-Opener-Policy: same-origin
+
+{"problem": {"title": "\u9898\u516b\uff1a\u8ff7\u8e2a\u6b65", "description": "JavaScript\u7ecf\u8fc7\u6df7\u6dc6\u5904\u7406\uff0c\u7ed9\u5bf9\u6297\u589e\u52a0\u96be\u5ea6\uff0c\u9002\u5408\u5728\u5b66\u4e60JavaScript\u6df7\u6dc6\u7684\u4eba\u7fa4", "difficulty": "\u4e2d\u7b49", "tags": ["js\u52a0\u5bc6", "js\u6df7\u6dc6"]}, "pagination": {"has_previous": false, "previous_page_number": null, "number": 1, "has_next": true, "next_page_number": 2, "num_pages": 20}, "current_array": [11, 404, 48, 515, 763, 582, 976, 604, 536, 534]}

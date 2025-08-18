@@ -1,0 +1,33 @@
+GET /api/problem-detail/7/data/?page=2&x=6a3d211a65ba3279bcc852e1bc766a9c5869c84a107207ce7f58a20f0fc8661e HTTP/1.1
+Host: www.mashangpa.com
+Ts: 1752804642534
+Sec-Ch-Ua-Platform: "macOS"
+Sec-Ch-Ua: "Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"
+Sec-Ch-Ua-Mobile: ?0
+M: a0536018a20412a984f54b6c6ebbc6b8
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+Accept: application/json, text/javascript, */*; q=0.01
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://www.mashangpa.com/problem-detail/7/
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Priority: u=1, i
+Connection: keep-alive
+
+HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 18 Jul 2025 02:10:42 GMT
+Content-Type: application/json
+Content-Length: 969
+Connection: keep-alive
+Vary: Cookie
+X-Content-Type-Options: nosniff
+Referrer-Policy: same-origin
+Cross-Origin-Opener-Policy: same-origin
+Set-Cookie: sessionid=ojj6ugazos8bzlrnuel7vxa0tbowtv32; expires=Fri, 01 Aug 2025 02:10:42 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax
+X-Cache: MISS
+
+{"r": "361d3626adcf4a361c385c8f0b39c963b81e57b5af5e5bce1bbb75947a6268c66b176a445cf6f33f1478ddfb9d052745ca18b6712d072ca9bcf138f7d8528bbf19f4c934dbc1aefb4a5af66cb9b6ce04bebf6d7786ea97d4a13a9aadc97bb0fe4da3db0fe718e587a7f57a226823707385d65717201eefbac63658f3f382fbaf990ebb73d38491223465517d3636bac00b60e8e8feb0b9b5f8f541dd5758496da13665c68fc56f45e34adb8d81c437dfe58910fa8cdb74c759400829c9c006e76dc0a1a4988b55d91a66d17c540dc45d128c29ea2eba171009dbd5af425465922511db82ecef1c5862cba634ff47e327972ac892071c426b5ea66d6124fba17340c657f1eb480743434c005a1cdfd4bf314e097b9289e7c32f60aa3bc5f5b72a4dbeabb0593b64e262483b7d5ae2585b46096091285d640fd4c0d50f0eec774171fb3c2dcec8a1e41105f19c8a9f958981078110d79ee5041c999fe8e66358a138e164da673baf3f2ebc3630e66b9039f20035f76a4718a7c18d1e1c5a2e8cd3278ba8349b1b5ac136ae887a32cf9319c9bc3df76fa8c0e0af629d6f287993af879fb460b60d3ecd452d3308ea872d6e69494c5060048faf47aaaae0b6827fd94eee273cb241f2e98202faca8c49a22caa6c06be1c47a9e40e92dc1fbeb83f67"}

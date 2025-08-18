@@ -1,0 +1,32 @@
+GET /api/problem-detail/15/data/?page=2 HTTP/1.1
+Host: www.mashangpa.com
+Cookie: 
+Sec-Ch-Ua-Platform: "macOS"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+Hexin-V: QTJQNlBEdTBBTWxHWE1QaXV2bzN6Qy11OUt3SVdQT1dNZXc3OHBYQXYwSTUxSTFTSFNpSDZrRzh5eDJtMTc1NTA3MDIxODYwMA==
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://www.mashangpa.com/problem-detail/15/
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Priority: u=1, i
+Connection: keep-alive
+
+HTTP/1.1 200 OK
+Server: nginx
+Date: Wed, 13 Aug 2025 07:30:18 GMT
+Content-Type: application/json
+Content-Length: 555
+Connection: keep-alive
+Vary: Cookie
+X-Content-Type-Options: nosniff
+Referrer-Policy: same-origin
+Cross-Origin-Opener-Policy: same-origin
+Set-Cookie: sessionid=c17323vnj5q4v74nu4trh045k9wqzf2x; expires=Wed, 27 Aug 2025 07:30:18 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax
+X-Cache: MISS
+
+{"problem": {"title": "\u9898\u5341\u4e94\uff1acookie\u5bf9\u6297", "description": "JS\u9006\u5411cookie\u53cd\u722c\u866b\uff0c\u7ed9\u9700\u8981\u8fdb\u9636\u9006\u5411\u7684\u540c\u5b66\u7ec3\u4e60\u3002\u6a21\u4eff\u56fd\u5185\u67d0\u91d1\u878d\u7f51\u7ad9\u8bbe\u8ba1cookie\u53cd\u722c", "difficulty": "\u4e2d\u7b49", "tags": ["js\u52a0\u5bc6"]}, "pagination": {"has_previous": true, "previous_page_number": 1, "number": 2, "has_next": true, "next_page_number": 3, "num_pages": 20}, "current_array": [172, 339, 816, 379, 450, 77, 465, 389, 815, 110]}

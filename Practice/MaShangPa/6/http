@@ -1,0 +1,31 @@
+GET /api/problem-detail/6/data/?page=1 HTTP/1.1
+Host: www.mashangpa.com
+Sec-Ch-Ua-Platform: "macOS"
+Tt: 1752805961928
+S: c6dc8387f7d8c6da2a1a75daf440079f
+Sec-Ch-Ua: "Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://www.mashangpa.com/problem-detail/6/
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Priority: u=1, i
+Connection: keep-alive
+
+HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 18 Jul 2025 02:32:42 GMT
+Content-Type: application/json
+Content-Length: 1001
+Connection: keep-alive
+Vary: Cookie
+X-Content-Type-Options: nosniff
+Referrer-Policy: same-origin
+Cross-Origin-Opener-Policy: same-origin
+X-Cache: MISS
+
+{"t": "361d3626adcf4a361c385c8f0b39c963f0469b9c6ff6d23c7e0b145e1b885851be1cff3c2d5ef470376708d6f60fad1c4c9987e181d330ca77dc5cb91d0ab5c1680f095d61499b9023658e14181dee9f1345ad91df727ce58e869da5f59aef9df7f38b4730811ba0fe75bd3c2c95fdd5054eb1e57ee01817f2ade931100f307b497bc2b6dade4143419d9613f268f80283cdf202aba59e969fd8e4338e9678f4d5301e80407904687f5e0c68d4ba413d0a66dbc4f2758901aa4ff102be1b31aeea6d53acc884ea1abf6dba04fd8b9582027caf80badcefa2df46b1076ff883ed99aa1acd9860c7050a9e4ea36493a5b9f26ea29bd1bc5378f881856e9648ad3e977a57d33ffab33a406087a34ba40abd66859bb0f0328978c5ad97b43f3d8142724f9f051f4b276ec253da7fd33b0a3b66e900ba30f749420f402d178d77994097279565ce7630f5840ec5a5754fce466dfb215b96f9c0a795e844bece955f54e294d71c4e2cd96b92b110392629e1771938ae09d9f7c4c75d47af17d744e13134be19913373c7b6b17de26f68c1777d572120475bd605739dbc48752a502d3c7d766298efa5de14017c586be09b372c67446b4e7e281ab61fd89e359133b5a8869510be646b64f2cceb255a37f2aea6485bd56e5126eb935e7329493e92a0b5f4a2a6d8502d74e8a8e8b5e73ac1fd60"}
