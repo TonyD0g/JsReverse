@@ -2,7 +2,7 @@
 # headers请求头验证。有反爬，浏览器相关指纹需处理，适合初级爬虫入门练习。根据返回的数据进行求和并提交答案
 import time
 import requests
-from MaShangPa.Const import cookies
+from Practice.MaShangPa.Const import cookies
 
 def get_array_by_get(level,page) -> int:
     headers = {

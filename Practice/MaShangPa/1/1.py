@@ -2,7 +2,7 @@
 # 使用爬虫采集详情数据，根据返回的数据进行求和提交答案
 import time
 import requests
-from MaShangPa.Const import cookies
+from Practice.MaShangPa.Const import cookies
 
 def get_array_by_get(level,page) -> int:
     header = {

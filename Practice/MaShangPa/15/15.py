@@ -1,10 +1,11 @@
 # 关卡链接: https://www.mashangpa.com/problem-detail/15/
-# js代码混淆,无限debug,魔改加密算法,cookie反爬(模仿某金融网站的cookie反爬)
-import base64
+# 无限debug,魔改加密算法,cookie反爬(模仿某金融网站的cookie反爬):请求体加密v/Hexin-V
 import time
+
 import requests
-from MaShangPa.Const import cookies
-from MaShangPa.Const import submitAnswers
+
+from Practice.MaShangPa.Const import cookies
+from Practice.MaShangPa.Const import submitAnswers
 
 
 def get_array_by_get(level, page_number, v) -> int:

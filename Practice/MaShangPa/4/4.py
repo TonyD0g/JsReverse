@@ -3,8 +3,8 @@
 import hashlib
 import time
 import requests
-from MaShangPa.Const import cookies
-from MaShangPa.Const import submitAnswers
+from Practice.MaShangPa.Const import cookies
+from Practice.MaShangPa.Const import submitAnswers
 
 
 def get_array_by_get(level, page, sign, ts) -> int:

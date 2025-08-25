@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Lock Console Pro
+// @name         绕过无法使用Console
 // @version      v1.1
 // @description  彻底防止页面篡改 console 对象及其方法
 // @author       TonyDog
