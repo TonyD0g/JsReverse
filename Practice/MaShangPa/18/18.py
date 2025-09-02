@@ -1,5 +1,6 @@
-# 关卡链接: https://www.mashangpa.com/problem-detail/15/
-# cookie反爬(模仿某金融网站的cookie反爬):请求体加密v/Hexin-V
+# 关卡链接: https://www.mashangpa.com/problem-detail/18/
+# 模拟大厂算法
+# 检测控制台是否打开/请求头M/请求头Timestamp(毫秒时间戳,非秒时间戳)/检测代码是否格式化(使用https://www.jijie.ink/tool/js-formatter进行压缩)
 # 使用hook的方式解
 import time
 from typing import Any, Literal
@@ -13,13 +14,15 @@ from Practice.MaShangPa.Const import cookies
 from Practice.MaShangPa.Const import submitAnswers
 
 
-def get_array_by_get(level, page_number, v) -> None | int | Literal[0] | Any:
-    v = str(v, encoding='utf-8')
+def get_array_by_get(level, page_number, M, Timestamp) -> None | int | Literal[0] | Any:
+    M = str(M, encoding='utf-8')
+    Timestamp = str(Timestamp, encoding='utf-8')
     headers = {
-        "Cookie": cookies + ' v=' + v,
+        "Cookie": cookies,
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
         "Sec-Ch-Ua": '"Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"',
-        "Hexin-V": v,
+        "M": M,
+        "Timestamp": Timestamp,
         "Sec-Ch-Ua-Mobile": "?0",
         "Accept": "*/*",
         "Sec-Fetch-Site": "same-origin",
@@ -41,6 +44,7 @@ def get_array_by_get(level, page_number, v) -> None | int | Literal[0] | Any:
         return sum(current_array)
     except:
         return None
+
 
 # 使用JsRpc调用 loadPage()
 # demo.regAction("execLoadPage", function (resolve, param) {
@@ -66,7 +70,7 @@ def call_loadPage(page_number):
 
 
 def main():
-    level = 15
+    level = 18
     total_sum = 0
     isBreak = False
     temp_accept_data_by_font = ''
@@ -84,9 +88,13 @@ def main():
             if len(data) != 0 and data != temp_accept_data_by_font:
                 break
 
-        v = data
+        M = data
+
+        timestamp_seconds = time.time()
+        Timestamp = int(timestamp_seconds * 1000)
+
         temp_accept_data_by_font = data
-        total_sum_by_current_page = get_array_by_get(level, page_number, v)
+        total_sum_by_current_page = get_array_by_get(level, page_number, M, Timestamp)
         if total_sum_by_current_page == 0 or total_sum_by_current_page is None:
             print("[-] 遇到错误!")
             isBreak = True

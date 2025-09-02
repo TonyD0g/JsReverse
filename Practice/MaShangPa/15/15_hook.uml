@@ -1,0 +1,9 @@
+@startuml
+Browser -> Server: 1.获取JS
+Server -> Browser: 2.返回JS,此处修改原JS,插入传值的代码
+Python -> Browser: 3.jsRPC触发loadPage方法,得到加密参数,将其存储到redis
+Browser -> Python: 4.JS代码得到加密参数后,将其发送到Python
+
+Python -> Server: 5.读取redis中的加密参数,构造对应的HTTP数据包,并发送
+Server <-- Server: 6.解密参数,如果正确则继续执行
+@enduml

@@ -1,12 +1,14 @@
 /**
  * 前言:适用于目标检测控制台的情况但绕不过去的情况,利用本方法可将大部分变量瞬间全部导出
  * 使用方法:
+ * 0. 除了使用 Header Editor 插件,还可以使用Burp的bambda模式
  * 1.浏览器下载 Header Editor 插件
  * 2.添加一个规则: 
- *    匹配类型: 目标js的正则表达式
+ *    规则类型: 选择`修改响应体``
+ *    匹配类型: `目标js的正则表达式`
  *    执行: 
  *        请求阶段: 响应
- *        响应头: 先抓个包,把原js的header头copy下来,打开一个AI,问:`请将以下内容转换为json中的键值对`
+ *        响应头: 先抓个包,把原js的header头copy下来,打开一个AI,问:`请将以下内容转换为json中的键值对`,记得添加header头: content-type:application/javascript
  *        响应体: 
  *              使用本目录下的`AST注册所有变量到window.js`文件,将原js进行AST处理.
  *              删除AST处理后的console.log,防止因目标的检测而无法生效.
@@ -41,16 +43,16 @@ const jsonString = safeStringify(outputData);
 // 3. 创建Blob对象并生成下载链接
 const blob = new Blob([jsonString], { type: 'application/json' });
 const url = URL.createObjectURL(blob);
-const a = document.createElement('a');
-a.href = url;
-a.download = 'window_variables.json'; // 自定义文件名
+const afgfsdgdfg = document.createElement('afgfsdgdfg');
+afgfsdgdfg.href = url;
+afgfsdgdfg.download = 'window_variables.json'; // 自定义文件名
 
 // 4. 触发下载
-document.body.appendChild(a);
-a.click();
+document.body.appendChild(afgfsdgdfg);
+afgfsdgdfg.click();
 
 // 5. 清理资源
 setTimeout(() => {
-  document.body.removeChild(a);
+  document.body.removeChild(afgfsdgdfg);
   URL.revokeObjectURL(url);
 }, 100);

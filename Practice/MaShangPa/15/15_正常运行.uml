@@ -1,0 +1,8 @@
+@startuml
+Browser -> Server: 1.获取JS
+Server -> Browser: 2.返回JS
+Browser --> Browser: 3.点击按钮触发loadPage方法,执行JS,得到加密参数
+
+Browser -> Server: 4.利用加密参数,构造对应的HTTP数据包,并发送
+Server <-- Server: 5.解密参数,如果正确则继续执行
+@enduml

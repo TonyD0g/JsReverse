@@ -1,3 +1,8 @@
+// 将 clearSessionStorage 方法放在需要清除状态的位置
+function clearSessionStorage() {
+  sessionStorage.setItem('isInitialized', 'false');
+}
+
 // 将 initializeSession 方法放在你想传输的位置,传参为要发送到后端的值 
 function initializeSession(sendValue) {
     // 1. 检查浏览器是否支持 sessionStorage
@@ -34,15 +39,44 @@ function blockMainThread(ms) {
 
 // 实际发送到后端的代码
 function sendInitializationRequest(sendValue) {
-    fetch('http://127.0.0.1:5000/accept', {
+    // 初始化请求配置
+    const config = {
         method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: sendValue
-    })
-    .then(response => {
-        if (!response.ok) throw new Error('请求失败');
-        return response.json();
-    })
-    .then(data => console.log('成功:', data))
-    .catch(error => console.error('错误:', error));
+        headers: {},
+        body: null
+    };
+
+    // 根据数据类型设置 Content-Type 和请求体
+    if (sendValue instanceof FormData) {
+        config.body = sendValue;
+        // 不设置 Content-Type，浏览器会自动生成带 boundary 的格式 
+    } else if (sendValue instanceof URLSearchParams) {
+        config.body = sendValue;
+        config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    } else if (typeof sendValue === 'string' && sendValue.startsWith('<')) {
+        config.body = sendValue;
+        config.headers['Content-Type'] = 'application/xml; charset=UTF-8';
+    } else if (typeof sendValue === 'string') {
+        config.body = sendValue;
+        config.headers['Content-Type'] = 'text/plain; charset=UTF-8';
+    } else if (sendValue instanceof Blob) {
+        config.body = sendValue;
+        config.headers['Content-Type'] = sendValue.type || 'application/octet-stream';
+    } else {
+        // 默认 JSON 类型
+        config.body = JSON.stringify(sendValue);
+        config.headers['Content-Type'] = 'application/json; charset=UTF-8';
+    }
+
+    // 发送请求并仅检查状态码
+    fetch('http://127.0.0.1:5000/accept', config)
+        .then(response => {
+            if (response.ok) {
+                console.log(`请求成功，状态码: ${response.status}`);
+                return Promise.resolve();
+            } else {
+                throw new Error(`请求失败，状态码: ${response.status}`);
+            }
+        })
+        .catch(error => console.error('错误:', error));
 }

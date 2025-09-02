@@ -1,6 +1,7 @@
-# 关卡链接: https://www.mashangpa.com/problem-detail/15/
-# cookie反爬(模仿某金融网站的cookie反爬):请求体加密v/Hexin-V
-# 使用hook的方式解
+# 关卡链接: https://www.mashangpa.com/problem-detail/11/
+# wasm加密. 使用hook的方式解
+# param参数: m 、_ts
+import json
 import time
 from typing import Any, Literal
 
@@ -11,36 +12,6 @@ r = redis.Redis()
 
 from Practice.MaShangPa.Const import cookies
 from Practice.MaShangPa.Const import submitAnswers
-
-
-def get_array_by_get(level, page_number, v) -> None | int | Literal[0] | Any:
-    v = str(v, encoding='utf-8')
-    headers = {
-        "Cookie": cookies + ' v=' + v,
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
-        "Sec-Ch-Ua": '"Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"',
-        "Hexin-V": v,
-        "Sec-Ch-Ua-Mobile": "?0",
-        "Accept": "*/*",
-        "Sec-Fetch-Site": "same-origin",
-        "Sec-Fetch-Mode": "cors",
-        "Content-Type": "application/json",
-        "Origin": "https://www.mashangpa.com",
-        "Referer": "https://www.mashangpa.com/problem-detail/8/",
-        "X-Requested-With": "XMLHttpRequest",
-        "Connection": "keep-alive",
-    }
-    response = requests.get(
-        f'https://www.mashangpa.com/api/problem-detail/{level}/data/?page={page_number}', headers=headers)
-    if response.status_code != 200:
-        print(response.text)
-        return 0
-
-    try:
-        current_array = response.json()['current_array']
-        return sum(current_array)
-    except:
-        return None
 
 # 使用JsRpc调用 loadPage()
 # demo.regAction("execLoadPage", function (resolve, param) {
@@ -64,31 +35,75 @@ def call_loadPage(page_number):
     except requests.exceptions.Timeout:  # 忽略超时异常，无需处理响应
         pass
 
+def get_array_by_get(level, page_number, m, _ts) -> None | int | Literal[0] | Any:
+    headers = {
+        "Cookie": cookies ,
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+        "Sec-Ch-Ua": '"Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"',
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Accept": "*/*",
+        "Sec-Fetch-Site": "same-origin",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Dest": "empty",
+        "Referer": f"https://www.mashangpa.com/problem-detail/{level}/",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-CN,zh;q=0.9",
+        "Priority": "u=1, i",
+        "Connection": "keep-alive",
+    }
+    response = requests.get(
+        f'https://www.mashangpa.com/api/problem-detail/{level}/data/?page={page_number}&m={m}&_ts={_ts}',
+        headers=headers)
+    if response.status_code != 200:
+        print(response.text)
+        return 0
+
+    # 响应包解密
+    try:
+        current_array = response.json()['current_array']
+        return sum(current_array)
+    except:
+        return None
+
+
+# jsRPC代码:
+
+def get_request_param() -> str:
+    response = requests.get(
+        f'http://127.0.0.1:12080/go?group=zzz&action=getRequestParam')
+    if response.status_code != 200:
+        return ''
+
+    return response.json()['data']
+
 
 def main():
-    level = 15
+    level = 11
     total_sum = 0
     isBreak = False
     temp_accept_data_by_font = ''
 
-    print("[+] 开始运行")
     for page_number in range(20):
-        r.set("accept_data_by_font", '')
         page_number = page_number + 1
+
         # jsRpc调用 loadPage
         call_loadPage(page_number)
         time.sleep(0.8)
 
         while True:
             data = r.get("accept_data_by_font")  # 从Redis读取
+            data =  data.decode('utf-8')
             if len(data) != 0 and data != temp_accept_data_by_font:
                 break
 
-        v = data
         temp_accept_data_by_font = data
-        total_sum_by_current_page = get_array_by_get(level, page_number, v)
+        data_dict = json.loads(data)
+
+        m = data_dict.get('m')
+        _ts = data_dict.get('_ts')
+
+        total_sum_by_current_page = get_array_by_get(level, page_number, m, _ts)
         if total_sum_by_current_page == 0 or total_sum_by_current_page is None:
-            print("[-] 遇到错误!")
             isBreak = True
             break
         print(f"page:{page_number} - total_sum:{str(total_sum_by_current_page)}")

@@ -1,6 +1,5 @@
 POST /api/problem-detail/8/data/ HTTP/1.1
 Host: www.mashangpa.com
-Cookie: sessionid=ojj6ugazos8bzlrnuel7vxa0tbowtv32; Hm_lvt_0d2227abf9548feda3b9cb6fddee26c0=1753153764,1753170105,1753171134,1753236916; HMACCOUNT=75D220E9701682BB; Hm_lpvt_0d2227abf9548feda3b9cb6fddee26c0=1753236941; s=51b351b351b351b370b0f03010309071d030f09070
 Content-Length: 10
 Pragma: no-cache
 Cache-Control: no-cache
