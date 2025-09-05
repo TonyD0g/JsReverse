@@ -1,57 +1,70 @@
 // ==UserScript==
 // @name         jsrpc-auto-inject
-// @version      v1
+// @version      v3
 // @description  用于自动注入JSRPC基础代码,从而为注入自定义function做准备,减少人的使用操作(需要开启JSRPC)
 // @author       TonyD0g
 // @match        *://*/*
 // @include      *://*/*
 // @run-at       document-start
+// @grant unsafeWindow
 // @license      MIT
 // ==/UserScript==
 
-(function() {  // 立即执行函数，创建独立作用域
-   // 创建提示框元素
-const toast = document.createElement('div');
-toast.id = 'custom-toast-notification';
-toast.style.cssText = `
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: rgba(144, 238, 144, 1); /* 亮黄色背景 */
-        color: #333; /* 深灰色文字 */
-        padding: 12px 24px;
-        border-radius: 6px;
-        font-family: Arial, sans-serif;
-        font-size: 16px; /* 增大字体大小 */
-        z-index: 9999;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-        text-align: center;
-        max-width: 80%;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* 更深的阴影 */
-        pointer-events: none;
-    `;
+(function(win) {  // 立即执行函数，创建独立作用域
+   // 将 toast 变量声明在外部，让 showMessage 函数可以访问到
+    let toast;
 
-// 添加到页面
-document.body.appendChild(toast);
+    // 显示消息的函数
+    function showMessage(message) {
+        if (!toast) { // 简单的容错判断，如果toast不存在则创建
+            initToast();
+        }
+        // 设置消息内容
+        toast.textContent = message;
+        toast.style.opacity = '1';
 
-// 显示消息的函数
-function showMessage(message) {
-    // 设置消息内容
-    toast.textContent = message;
-    toast.style.opacity = '1';
-
-    // 3秒后隐藏
-    setTimeout(() => {
-        toast.style.opacity = '0';
-
-        // 动画完成后移除元素（可选）
+        // 3秒后隐藏
         setTimeout(() => {
-            toast.remove();
-        }, 500);
-    }, 3000);
-}
+            toast.style.opacity = '0';
+            // 动画完成后移除元素（可选）
+            setTimeout(() => {
+                // toast.remove(); // 注意：如果移除了，下次调用showMessage需要重新创建
+            }, 500);
+        }, 3000);
+    }
+
+    // 创建 toast 元素的函数
+    function initToast() {
+        toast = document.createElement('div');
+        toast.id = 'custom-toast-notification';
+        toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(144, 238, 144, 1);
+            color: #333;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            text-align: center;
+            max-width: 80%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            pointer-events: none;
+        `;
+        document.body.appendChild(toast);
+    }
+
+    // 监听 DOMContentLoaded 事件
+    document.addEventListener('DOMContentLoaded', function() {
+        initToast(); // 创建 toast 元素
+        // 现在可以安全地调用 showMessage 了
+        showMessage('JSRPC已成功注入!');
+    });
 
 // 将函数暴露到全局，以便在其他地方调用
 window.showToastMessage = showMessage;
@@ -177,5 +190,5 @@ Hlclient.prototype.sendResult = function(action, message_id, e) {
 
 window.Hlclient = Hlclient;
 var demo = new Hlclient("ws://127.0.0.1:12080/ws?group=zzz");
-showMessage('JSRPC已成功注入!');
-})();
+win.demo = demo;
+})(unsafeWindow);

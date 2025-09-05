@@ -1,22 +1,90 @@
-from fastapi import FastAPI, Body
-from fastapi.middleware.cors import CORSMiddleware  # 引入中间件
+import json
+from typing import Dict, Union
+
+import redis
+import uvicorn
+from fastapi import FastAPI, Request, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+
+r = redis.Redis()
 
 app = FastAPI()
 
 # 配置 CORS 中间件
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 允许所有源（生产环境应替换为具体前端域名）
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # 允许所有 HTTP 方法（包括 OPTIONS）
-    allow_headers=["*"],  # 允许所有请求头
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
+
+async def universal_body_parser(request: Request) -> Union[Dict, str, bytes]:
+    """通用请求体解析器，支持多种内容类型"""
+    content_type = request.headers.get("Content-Type", "")
+
+    # 处理JSON
+    if "application/json" in content_type:
+        try:
+            return await request.json()
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"JSON解析错误: {str(e)}")
+
+    # 处理表单数据（包括文件上传）
+    elif "multipart/form-data" in content_type or "application/x-www-form-urlencoded" in content_type:
+        form_data = await request.form()
+        parsed_data = {}
+
+        # 处理普通字段
+        for key, value in form_data.items():
+            if not isinstance(value, UploadFile):
+                parsed_data[key] = value
+
+        # 处理文件字段
+        files = await request.files()
+        for key, file in files.items():
+            file_content = await file.read()
+            parsed_data[key] = {
+                "filename": file.filename,
+                "content_type": file.content_type,
+                "size": len(file_content),
+                "content": file_content.decode("utf-8", errors="ignore")  # 文本文件解码
+            }
+        return parsed_data
+
+    # 处理纯文本
+    elif "text/plain" in content_type:
+        return (await request.body()).decode("utf-8")
+
+    # 其他类型按二进制处理
+    else:
+        return await request.body()
+
+
 @app.post("/accept")
-async def accept_data(body: str = Body(..., media_type="text/plain")):
-    print(f"Received string: {body}")
-    return {}
+async def accept(request: Request):
+    """通用请求处理端点"""
+    try:
+        # 使用通用解析器处理请求体[6,7](@ref)
+        body = await universal_body_parser(request)
+
+        # 根据不同类型处理存储逻辑
+        if isinstance(body, dict): # 字典类型存储为JSON字符串
+             r.set("accept_data_by_font", json.dumps(body)) # 重要!:无需使用 await 关键字
+        elif isinstance(body, (str, bytes)): # 文本/二进制直接存储
+             r.set("accept_data_by_font", body)
+        else: # 其他类型转为字符串存储
+            r.set("accept_data_by_font", str(body))
+
+        print(f"Received data: {type(body)} - {body}")
+        return {"status": "success", "data_type": type(body).__name__}
+
+    except Exception as e:
+        if str(e) == 'Error 61 connecting to localhost:6379. Connection refused.':
+            print("[-] redis-server 没有开启! 请检查!!!")
+        raise HTTPException(status_code=400, detail=f"请求处理失败: {str(e)}")
+
 
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=5000)
