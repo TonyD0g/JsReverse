@@ -1,8 +1,7 @@
-# todo 优先级高 这关没过
-# 关卡链接: https://www.mashangpa.com/problem-detail/18/
-# 模拟大厂算法
-# 检测控制台是否打开/请求头M/请求头Timestamp(毫秒时间戳,非秒时间戳)/检测代码是否格式化(使用https://www.jijie.ink/tool/js-formatter进行压缩)
-# 使用hook+中断+redis的方式解,需要替换原 pagination18.js 文件 / 开启 receiveData文件
+# 关卡链接: https://www.mashangpa.com/problem-detail/16/
+# 模拟某电商加密
+# 不让开控制台/检测控制台是否打开/请求体参数h5/检测代码是否格式化/本地和服务器时间戳不一致
+# 使用hook+中断+redis的方式解,需要替换原 pagination16.js 文件 / 开启 receiveData文件
 
 import time
 from typing import Any, Literal
@@ -16,15 +15,11 @@ from Practice.MaShangPa.Const import cookies
 from Practice.MaShangPa.Const import submitAnswers
 
 
-def get_array_by_get(level, page_number, M, Timestamp) -> None | int | Literal[0] | Any:
-    M = str(M, encoding='utf-8')
-    Timestamp = str(Timestamp, encoding='utf-8')
+def get_array_by_get(level, request_body) -> None | int | Literal[0] | Any:
     headers = {
         "Cookie": cookies,
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
         "Sec-Ch-Ua": '"Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"',
-        "M": M,
-        "Timestamp": Timestamp,
         "Sec-Ch-Ua-Mobile": "?0",
         "Accept": "*/*",
         "Sec-Fetch-Site": "same-origin",
@@ -35,8 +30,9 @@ def get_array_by_get(level, page_number, M, Timestamp) -> None | int | Literal[0
         "X-Requested-With": "XMLHttpRequest",
         "Connection": "keep-alive",
     }
-    response = requests.get(
-        f'https://www.mashangpa.com/api/problem-detail/{level}/data/?page={page_number}', headers=headers)
+
+    response = requests.post(
+        f'https://www.mashangpa.com/api/problem-detail/{level}/data/', headers=headers, data=request_body)
     if response.status_code != 200:
         print(response.text)
         return 0
@@ -72,7 +68,7 @@ def call_loadPage(page_number):
 
 
 def main():
-    level = 18
+    level = 16
     total_sum = 0
     isBreak = False
     temp_accept_data_by_font = ''
@@ -90,13 +86,10 @@ def main():
             if len(data) != 0 and data != temp_accept_data_by_font:
                 break
 
-        M = data
-
-        timestamp_seconds = time.time()
-        Timestamp = int(timestamp_seconds * 1000)
+        request_body = str(data.decode('utf-8'))
 
         temp_accept_data_by_font = data
-        total_sum_by_current_page = get_array_by_get(level, page_number, M, Timestamp)
+        total_sum_by_current_page = get_array_by_get(level, request_body)
         if total_sum_by_current_page == 0 or total_sum_by_current_page is None:
             print("[-] 遇到错误!")
             isBreak = True

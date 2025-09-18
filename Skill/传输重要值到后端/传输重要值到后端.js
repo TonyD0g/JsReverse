@@ -69,7 +69,7 @@ function sendInitializationRequest(sendValue) {
     }
 
     // 发送请求并仅检查状态码
-    fetch('http://127.0.0.1:5000/accept', config)
+    fetch('http://127.0.0.1:5421/accept', config)
         .then(response => {
             if (response.ok) {
                 console.log(`请求成功，状态码: ${response.status}`);

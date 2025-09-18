@@ -1,6 +1,6 @@
 # 关卡链接: https://www.mashangpa.com/problem-detail/15/
 # cookie反爬(模仿某金融网站的cookie反爬):请求体加密v/Hexin-V
-# 使用hook的方式解
+# 使用hook+中断+redis的方式解,需要替换原 新pagination15.js 文件 / 开启 receiveData文件
 import time
 from typing import Any, Literal
 

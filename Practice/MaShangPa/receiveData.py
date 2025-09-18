@@ -72,13 +72,13 @@ async def accept(request: Request):
         # 根据不同类型处理存储逻辑
         if isinstance(body, dict):
             # 字典类型存储为JSON字符串
-            await r.set("accept_data_by_font", json.dumps(body))
+            r.set("accept_data_by_font", json.dumps(body))
         elif isinstance(body, (str, bytes)):
             # 文本/二进制直接存储
-            await r.set("accept_data_by_font", body)
+            r.set("accept_data_by_font", body)
         else:
             # 其他类型转为字符串存储
-            await r.set("accept_data_by_font", str(body))
+            r.set("accept_data_by_font", str(body))
 
         print(f"Received data: {type(body)} - {body}")
         return {"status": "success", "data_type": type(body).__name__}
@@ -88,4 +88,4 @@ async def accept(request: Request):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=5000)
+    uvicorn.run(app, host="127.0.0.1", port=5421)
